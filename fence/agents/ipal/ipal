@@ -1,0 +1,51 @@
+#!/usr/bin/expect
+
+#@IMPROVEMENT port to python, as it is the most common programming language in
+# fence-agents and it removes the need of having two files for this agent
+
+if { [ llength $argv ] == 0 || [ llength $argv ] > 4} {
+   send_user "Usage: ipal <host> <outlet-portnumber> <passwd> \[ <toggles> \]\n"
+   exit 1
+}
+
+set host [lindex $argv 0]
+set outletnumber [lindex $argv 1]
+set passwd [lindex $argv 2]
+set toggles 2
+if { [ llength $argv ] == 4 } {
+   set toggles [ lindex $argv 3 ]
+}
+set remain $toggles
+
+spawn telnet $host
+set env(TERM) vt100
+set timeout 30
+
+expect timeout {
+        send_user "failed to contact $host\n"
+        exit
+} "Password >" {
+        # first password prompt, so just send a return
+        send "\r"
+}
+
+while {1} {
+    expect timeout {
+        send_user "failed to contact $host\n"
+        exit
+    } "Password >" {
+               # second password prompt, so send password
+               send "$passwd\r"
+    } "Enter >" {
+               # reboot prompt
+               if { $remain == 0 } {
+                  send_user "\ntoggled outlet $outletnumber $toggles times\n"
+                  exit 0
+               }
+               send "$outletnumber\r"
+               set remain [expr { $remain - 1 } ]
+    } eof {
+        send_user "failed to connect to power strip\n"
+        exit
+    }
+}

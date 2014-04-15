@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import sys
+import os
+
+# STDIN format:
+# "action=$power_mode\nlogin=$power_user\npasswd=$power_pass\nipaddr=$power_address\nport=$power_id"
+stdin_str = sys.stdin.read()
+#print "STDIN: " + stdin_str
+
+action_kv, login_kv, passwd_kv, ipaddr_kv, port_kv = stdin_str.split()
+
+action = action_kv.replace("action=", "")
+login = login_kv.replace("login=", "")
+passwd = passwd_kv.replace("passwd=", "")
+ipaddr = ipaddr_kv.replace("ipaddr=", "")
+port = port_kv.replace("port=", "")
+
+if action == "on":
+    os.system("ipal %s %s %s" % (ipaddr, port, passwd))

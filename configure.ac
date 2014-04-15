@@ -268,6 +268,7 @@ AC_CONFIG_FILES([Makefile
 		 fence/agents/eps/Makefile
 		 fence/agents/hpblade/Makefile
 		 fence/agents/ibmblade/Makefile
+		 fence/agents/ipal/Makefile
 		 fence/agents/ipdu/Makefile
 		 fence/agents/ifmib/Makefile
 		 fence/agents/ilo/Makefile
