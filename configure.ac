@@ -260,6 +260,7 @@ AC_CONFIG_FILES([Makefile
 		 fence/agents/cisco_mds/Makefile
 		 fence/agents/cisco_ucs/Makefile
 		 fence/agents/cpint/Makefile
+		 fence/agents/dli_pc8000/Makefile
 		 fence/agents/drac/Makefile
 		 fence/agents/drac5/Makefile
 		 fence/agents/dummy/Makefile
